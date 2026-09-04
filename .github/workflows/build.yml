@@ -1,0 +1,107 @@
+name: Build Telegram X (Nicegram Edition)
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build Type (debug or release)'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+          lfs: true
+
+      - name: Checkout Git LFS
+        run: git lfs pull
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK & CMake
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "ndk;25.2.9519653" "cmake;3.22.1"
+
+      - name: Configure local.properties & API Credentials
+        run: |
+          API_ID="${{ secrets.TGX_API_ID }}"
+          API_HASH="${{ secrets.TGX_API_HASH }}"
+
+          # Fallback to test credentials if secrets are not set
+          if [ -z "$API_ID" ]; then
+            echo "WARN: TGX_API_ID secret not found! Using fallback credentials."
+            API_ID="21724"
+            API_HASH="3e0cb5ab2c47c5d0124f114c000f074a"
+          fi
+
+          cat <<EOF > local.properties
+          sdk.dir=$ANDROID_HOME
+          ndk.dir=$ANDROID_HOME/ndk/25.2.9519653
+          app.id=org.thunderdog.challegram.nicegram
+          app.name=Telegram X Nicegram
+          telegram.api_id=$API_ID
+          telegram.api_hash=$API_HASH
+          EOF
+
+          echo "Generated local.properties successfully."
+
+      - name: Run Telegram X Setup Script
+        run: |
+          chmod +x scripts/*.sh || true
+          chmod +x gradlew
+          ./scripts/setup.sh --skip-sdk-setup || true
+
+      - name: Build APK with Gradle
+        run: |
+          BUILD_TYPE="${{ github.event.inputs.build_type || 'debug' }}"
+          if [ "$BUILD_TYPE" = "release" ]; then
+            ./gradlew assembleRelease --stacktrace --no-daemon
+          else
+            ./gradlew assembleDebug --stacktrace --no-daemon
+          fi
+
+      - name: Locate and Rename APK
+        run: |
+          mkdir -p output_apk
+          find app/build/outputs/apk/ -name "*.apk" -exec cp {} output_apk/ \;
+          ls -la output_apk/
+
+      - name: Upload APK as Workflow Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TelegramX-Nicegram-APK
+          path: output_apk/*.apk
+          retention-days: 14
+
+      - name: Create GitHub Release (if tag pushed)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: output_apk/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
