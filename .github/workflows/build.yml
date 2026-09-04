@@ -44,8 +44,9 @@ jobs:
 
       - name: Install Android NDK & CMake
         run: |
+          export TERM=xterm
           yes | sdkmanager --licenses || true
-          sdkmanager "ndk;25.2.9519653" "cmake;3.22.1"
+          sdkmanager "ndk;23.2.8568313" "cmake;3.22.1"
 
       - name: Configure local.properties & API Credentials
         run: |
@@ -61,8 +62,8 @@ jobs:
 
           cat <<EOF > local.properties
           sdk.dir=$ANDROID_HOME
-          ndk.dir=$ANDROID_HOME/ndk/25.2.9519653
-          app.id=org.thunderdog.challegram.nicegram
+          ndk.dir=$ANDROID_HOME/ndk/23.2.8568313
+          app.id=org.thunderdog.challegram
           app.name=Telegram X Nicegram
           telegram.api_id=$API_ID
           telegram.api_hash=$API_HASH
@@ -72,6 +73,7 @@ jobs:
 
       - name: Run Telegram X Setup Script
         run: |
+          export TERM=xterm
           chmod +x scripts/*.sh || true
           chmod +x gradlew
           ./scripts/setup.sh --skip-sdk-setup || true
