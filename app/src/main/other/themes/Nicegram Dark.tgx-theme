@@ -1,0 +1,25 @@
+!
+id: 100
+name: "Nicegram Dark"
+time: 1725470000
+@
+bubbleCorner: 18
+bubbleCornerMerged: 6
+bubbleDateCorner: 12
+avatarRadiusChatList: 24
+avatarRadius: 24
+dark, parentTheme, shadowDepth, wallpaperUsageId: 1
+#
+attachContact, attachFile, attachInlineBot, attachLocation, attachPhoto, badgeMutedText, badgeText, chatKeyboardButton, headerBackground, headerBarCallMuted, headerLightBackground, inlineContentActive, iv_preBlockBackground, iv_textCodeBackground, iv_textCodeBackgroundPressed, messageSwipeBackground, notification, notificationPlayer, passcode, unread: #1C1C1E
+bubbleIn_background: #262628
+bubbleOut_background: #6C5CE7
+background, bubble_chatSeparator, bubbleIn_outline, bubbleIn_separator, bubbleOut_chatCorrectChosenFillingContent, bubbleOut_chatCorrectFillingContent, bubbleOut_chatNeutralFillingContent, bubbleOut_outline, chatKeyboard, chatSeparator, checkContent, controlContent, iv_chatLinkBackground, messageCorrectChosenFillingContent, messageCorrectFillingContent, messageNegativeLineContent, messageNeutralFillingContent, promoContent, separator, shareSeparator, togglerPositiveContent: #000000
+background_icon, background_text, background_textLight, bubbleIn_time, bubbleOut_progress, bubbleOut_separator, bubbleOut_time, circleButtonChatIcon, circleButtonOverlayIcon, icon, iv_caption, iv_icon, iv_pageAuthor, iv_pageFooter, textLight, textPlaceholder: #8E8E93
+badge, bubbleIn_progress, bubbleIn_text, bubbleOut_chatCorrectChosenFilling, bubbleOut_chatCorrectFilling, bubbleOut_chatVerticalLine, bubbleOut_inlineIcon, bubbleOut_inlineOutline, bubbleOut_inlineText, bubbleOut_text, bubbleOut_ticks, bubbleOut_ticksRead, chatListAction, chatListVerify, chatSendButton, checkActive, controlActive, headerButtonIcon, headerLightIcon, headerLightText, iconActive, inlineContent, inputActive, iv_headerBackground, iv_pageTitle, link, messageAction, passcodeContent, playerActive, progress, roundFill, switchActive, textActive, textLink, togglerActive, togglerPositive: #6C5CE7
+bubbleIn_chatCorrectChosenFilling, bubbleIn_chatCorrectFilling, bubbleIn_chatVerticalLine, bubbleIn_inlineIcon, bubbleIn_inlineOutline, bubbleIn_inlineText, bubbleIn_ticks, bubbleIn_ticksRead: #6C5CE7
+text, chatSendButtonContent, headerText, inputContent, iv_pageContent, passcodeText, tooltip_text: #FFFFFF
+headerButtonIconPressed, iconPressed: #A29BFE
+bubbleIn_chatNeutralFilling, bubbleOut_chatNeutralFilling: #3A3A3C
+bubbleIn_chatNegativeFilling, bubbleOut_chatNegativeFilling: #FF453A
+fillingPressed, listItemPressed: #2C2C2E
+filling: #1C1C1E
