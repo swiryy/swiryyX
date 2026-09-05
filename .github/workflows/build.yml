@@ -5,6 +5,8 @@ on:
     branches: [ main, master ]
     tags:
       - 'v*'
+  pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
     inputs:
       build_type:
@@ -16,10 +18,15 @@ on:
           - debug
           - release
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository (with submodules)
@@ -55,7 +62,7 @@ jobs:
 
           # Fallback to test credentials if secrets are not set
           if [ -z "$API_ID" ]; then
-            echo "WARN: TGX_API_ID secret not found! Using fallback credentials."
+            echo "::warning::TGX_API_ID secret not found! Using fallback test credentials."
             API_ID="21724"
             API_HASH="3e0cb5ab2c47c5d0124f114c000f074a"
           fi
@@ -63,47 +70,55 @@ jobs:
           cat <<EOF > local.properties
           sdk.dir=$ANDROID_HOME
           ndk.dir=$ANDROID_HOME/ndk/23.2.8568313
-          app.id=org.thunderdog.challegram
+          app.id=org.nicegram.tgx
           app.name=Telegram X Nicegram
           telegram.api_id=$API_ID
           telegram.api_hash=$API_HASH
           EOF
 
-          echo "Generated local.properties successfully."
+          echo "✅ Generated local.properties successfully."
 
       - name: Run Telegram X Setup Script
         run: |
           export TERM=xterm
           chmod +x scripts/*.sh || true
           chmod +x gradlew
+          # TGX setup script (компіляція TDLib та інших залежностей)
           ./scripts/setup.sh --skip-sdk-setup || true
 
       - name: Build APK with Gradle
+        env:
+          GRADLE_OPTS: "-Xmx4096m -XX:MaxMetaspaceSize=1024m"
         run: |
           BUILD_TYPE="${{ github.event.inputs.build_type || 'debug' }}"
           if [ "$BUILD_TYPE" = "release" ]; then
-            ./gradlew assembleRelease --stacktrace --no-daemon
+            ./gradlew assembleUniversalRelease --stacktrace --no-daemon --build-cache
           else
-            ./gradlew assembleDebug --stacktrace --no-daemon
+            ./gradlew assembleUniversalDebug --stacktrace --no-daemon --build-cache
           fi
 
       - name: Locate and Rename APK
+        id: apk
         run: |
           mkdir -p output_apk
           find app/build/outputs/apk/ -name "*.apk" -exec cp {} output_apk/ \;
-          ls -la output_apk/
+          APK_FILE=$(ls output_apk/*.apk | head -1)
+          echo "apk_path=$APK_FILE" >> $GITHUB_OUTPUT
+          echo "📦 APK built: $APK_FILE"
+          ls -lh output_apk/
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TelegramX-Nicegram-APK
           path: output_apk/*.apk
-          retention-days: 14
+          retention-days: 30
 
       - name: Create GitHub Release (if tag pushed)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: output_apk/*.apk
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

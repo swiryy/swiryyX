@@ -6,8 +6,15 @@ time: 1725470000
 bubbleCorner: 18
 bubbleCornerMerged: 6
 bubbleDateCorner: 12
+bubbleOutlineSize: 0
 avatarRadiusChatList: 24
 avatarRadius: 24
+avatarRadiusBig: 26
+avatarRadiusSmall: 20
+imageCorner: 12
+stickersCorner: 10
+videoCorner: 12
+dateCorner: 14
 dark, parentTheme, shadowDepth, wallpaperUsageId: 1
 #
 attachContact, attachFile, attachInlineBot, attachLocation, attachPhoto, badgeMutedText, badgeText, chatKeyboardButton, headerBackground, headerBarCallMuted, headerLightBackground, inlineContentActive, iv_preBlockBackground, iv_textCodeBackground, iv_textCodeBackgroundPressed, messageSwipeBackground, notification, notificationPlayer, passcode, unread: #1C1C1E
@@ -23,3 +30,6 @@ bubbleIn_chatNeutralFilling, bubbleOut_chatNeutralFilling: #3A3A3C
 bubbleIn_chatNegativeFilling, bubbleOut_chatNegativeFilling: #FF453A
 fillingPressed, listItemPressed: #2C2C2E
 filling: #1C1C1E
+badgeFailed, bubbleOut_waveformActive, chatListMute: #FF3B30
+chatListDate, messageAuthor: #A2A2A7
+overlayFilling: #CC000000

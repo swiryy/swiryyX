@@ -1,0 +1,36 @@
+!
+id: 101
+name: "Nicegram Light"
+time: 1725470000
+@
+bubbleCorner: 18
+bubbleCornerMerged: 6
+bubbleDateCorner: 12
+bubbleOutlineSize: 0
+avatarRadiusChatList: 24
+avatarRadius: 24
+avatarRadiusBig: 26
+avatarRadiusSmall: 20
+imageCorner: 12
+stickersCorner: 10
+videoCorner: 12
+dateCorner: 14
+parentTheme, shadowDepth, wallpaperUsageId: 1
+#
+headerBackground, headerLightBackground, notification, notificationPlayer, passcode, unread, chatKeyboard, chatKeyboardButton: #FFFFFF
+bubbleIn_background: #E8E8ED
+bubbleOut_background: #6C5CE7
+background: #FFFFFF
+background_icon, background_text, background_textLight, bubbleIn_time, bubbleOut_progress, bubbleOut_separator, bubbleOut_time, icon, textLight, textPlaceholder, circleButtonChatIcon, circleButtonOverlayIcon: #8E8E93
+badge, bubbleIn_progress, chatListAction, chatListVerify, chatSendButton, checkActive, controlActive, headerButtonIcon, headerLightIcon, headerLightText, iconActive, inlineContent, inputActive, link, messageAction, passcodeContent, playerActive, progress, roundFill, switchActive, textActive, textLink, togglerActive, togglerPositive: #6C5CE7
+bubbleIn_text, text, chatSendButtonContent, headerText, inputContent, passcodeText, tooltip_text: #000000
+bubbleOut_text, bubbleOut_ticks, bubbleOut_ticksRead, bubbleOut_chatVerticalLine, bubbleOut_inlineIcon, bubbleOut_inlineOutline, bubbleOut_inlineText, bubbleOut_chatCorrectChosenFilling, bubbleOut_chatCorrectFilling: #FFFFFF
+headerButtonIconPressed, iconPressed: #A29BFE
+separator, chatSeparator, bubble_chatSeparator, shareSeparator: #E5E5EA
+fillingPressed, listItemPressed: #F2F2F7
+filling: #F2F2F7
+bubbleIn_chatNeutralFilling, bubbleOut_chatNeutralFilling: #D1D1D6
+bubbleIn_chatNegativeFilling, bubbleOut_chatNegativeFilling: #FF3B30
+badgeFailed, chatListMute: #FF3B30
+chatListDate, messageAuthor: #8E8E93
+overlayFilling: #80FFFFFF
