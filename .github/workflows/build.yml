@@ -92,9 +92,9 @@ jobs:
         run: |
           BUILD_TYPE="${{ github.event.inputs.build_type || 'debug' }}"
           if [ "$BUILD_TYPE" = "release" ]; then
-            ./gradlew assembleUniversalRelease --stacktrace --no-daemon --build-cache
+            ./gradlew assembleLatestUniversalRelease --stacktrace --no-daemon --build-cache
           else
-            ./gradlew assembleUniversalDebug --stacktrace --no-daemon --build-cache
+            ./gradlew assembleLatestUniversalDebug --stacktrace --no-daemon --build-cache
           fi
 
       - name: Locate and Rename APK
